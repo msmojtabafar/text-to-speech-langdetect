@@ -3,16 +3,16 @@ from gtts import gTTS
 import os
 
 def text_to_speech_save():
-    text = input("متن خود را وارد کنید: ").strip()
+    text = input("Enter your text: ").strip()
     if not text:
-        print("[!] متن ورودی خالی است.")
+        print("[!] The input text is empty.")
         return
 
     try:
         lang = detect(text)
         print(f"زبان شناسایی شده: {lang}")
     except LangDetectException:
-        print("[!] خطا در تشخیص زبان، فرض می‌کنیم انگلیسی است.")
+        print("[!] Error in language detection, assuming English.")
         lang = "en"
 
     # زبان‌های پشتیبانی شده توسط gTTS
@@ -25,16 +25,17 @@ def text_to_speech_save():
                        'uk', 'ur', 'vi', 'zh-cn', 'zh-tw', 'fa']
 
     if lang not in supported_langs:
-        print(f"[!] زبان {lang} توسط gTTS پشتیبانی نمی‌شود، از انگلیسی استفاده می‌کنیم.")
+        print(f"[!] Language {lang} is not supported by gTTS, we are using English.")
         lang = "en"
 
     try:
         tts = gTTS(text=text, lang=lang)
         filename = "output.mp3"
         tts.save(filename)
-        print(f"[+] صدای تبدیل شده در فایل '{filename}' ذخیره شد.")
+        print(f"[+] Converted audio saved to file '{filename}'.")
     except Exception as e:
-        print(f"[!] خطا در تبدیل متن به صدا: {e}")
+        print(f"[!] Error in text-to-speech conversion: {e}")
 
 if __name__ == "__main__":
+
     text_to_speech_save()
